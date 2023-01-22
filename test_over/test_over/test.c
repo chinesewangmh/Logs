@@ -55,9 +55,48 @@
 //}
 
 
-int main()
+//int main()
+//{
+//	char* s = "one", a[5] = { 0 }, ch=0;
+//	char(*p)[5] = &a;
+//	return 0;
+//}
+
+
+char* f(char* S)
 {
-	char* s = "one", a[5] = { 0 }, ch=0;
-	char(*p)[5] = &a;
-	return 0;
+    int count = 1;
+    int len = strlen(S);
+    if (len <= 2)
+        return S;
+    //存储新数组    
+    char* str = (char*)malloc(2 * len * sizeof(char));
+    int i = 0;
+    int p = 0;
+    for (i = 1; i < len + 1; i++) {
+        if (S[i] == S[i - 1]) {
+            count++;
+        }
+        else {
+            //遇到不相同的字符，把上一字符存储到新数组
+            str[p++] = S[i - 1];
+            //sprintf返回存储字符的个数，并在末尾补'\0'
+            int nlen = sprintf(&str[p], "%d", count);
+            p += nlen;
+            count = 1;
+        }
+    }
+    return strlen(str) < len ? str : S;
+}
+int main() {
+    //char arr[] = "hello\0*******";
+    //char arr1[] = "word";
+    //printf("%s\n", strcat(arr+2, arr1));
+  /*  char p1[15] = "abcd", * p2 = "ABCD", str[50] = "xyz";
+    strcpy(str + 2, strcat(p1 + 2, p2 + 1));
+    printf("%s", str);
+    return 0;*/
+    char* S= "aabcccccaaa";
+    f(S);
+
 }
