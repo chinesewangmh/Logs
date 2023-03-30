@@ -440,8 +440,195 @@ struct A {
 	int* a4;
 };
 //请问在64位编译器下用sizeof(struct A)计算出的大小是多少（）
+//int main()
+//{
+//	cout << sizeof(long) << endl;
+//	cout << sizeof(A) << endl;
+//}
+
+int uniquePaths(int m, int n) {
+    // if(m<1||n<1)
+    // {
+    //     return 0;
+    // }
+    // vector<vector<int>> vv(m,vector<int>(n,1));
+    // for(int i=1;i<m;++i)
+    // {
+    //     for(int j=1;j<n;j++)
+    //     {
+    //         vv[i][j]=vv[i][j-1]+vv[i-1][j];
+    //     }
+    // }
+    // return vv[m-1][n-1];
+    long long x = 1;
+    int y = 1;
+    /*if (m < n)
+        std::swap(m, n);*/
+    for (int i = 1; i < n; i++) {
+        x *= (m - 1) + i; //获取分子
+        y *= i; //获取分母
+    }
+    return x / y;
+}
+//int main()
+//{
+//    uniquePaths(11,18);
+//}
+
+class Board {
+public:
+    bool checkWon(vector<vector<int> > board) {
+        int row = board.size();
+        int col = board[0].size();
+        //同一行全为1
+        for (int i = 0; i < row; ++i)
+        {
+            for (int j = 0; j < col; ++j)
+            {
+                
+
+            }
+        }
+
+        //正对角线
+        for (int i = 0; i < row; ++i)
+        {
+            for (int j = 0; j < col; ++j)
+            {
+                if (i == j && board[i][j] == 1)
+                {
+
+                }
+            }
+        }
+    }
+};
+
+//int main()
+//{
+//    for (int i=0;i<10;++i)
+//    {
+//        if (3<=i)
+//        {
+//            cout << i << endl;
+//        }
+//    }
+//}
+#include<iostream>
+#include<string>
+using namespace std;
+int lengthNum(string& s)
+{
+    if (s.size() <= 4) return 5;
+    else if (s.size() >= 5 && s.size() <= 7) return 10;
+    else return 25;
+}
+int AZNum(string& s)
+{
+    bool a = false;
+    bool A = false;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        if (islower(s[i])) a = true;
+        if (isupper(s[i])) A = true;
+    }
+    if (A && a)
+    {
+        return 25;
+    }
+    else if (A && !a || !A && a)
+    {
+        return 10;
+    }
+    else
+        return 0;
+}
+int Numsum(string& s)
+{
+    int sum = 0;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        if (isdigit(s[i]))
+        {
+            ++sum;
+        }
+    }
+    if (sum > 1)
+    {
+        return 20;
+    }
+    else if (sum == 1)
+        return 10;
+    else
+        return 0;
+}
+
+int Fsum(string& s)
+{
+    int sum = 0;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        if (0x21 <= s[i] && s[i] <= 0x2F ||
+            s[i] >= 0x3A && s[i] <= 0x40 ||
+            s[i] >= 0x5B && s[i] <= 0x60 ||
+            s[i] >= 0x7B && s[i] <= 0x7E
+            )
+        {
+            ++sum;
+        }
+    }
+    if (sum > 1)
+    {
+        return 20;
+    }
+    else if (sum == 1)
+        return 10;
+    else
+        return 0;
+
+}
+int endSum(string& s)
+{
+
+    if (AZNum(s) == 20 && Numsum(s) > 0 && Fsum(s) > 0) return 5;
+    else if (AZNum(s) > 0 && Numsum(s) > 0 && Fsum(s) > 0) return 3;
+    else if (AZNum(s) > 0 && Numsum(s) > 0) return 2;
+    return 0;
+}
+
+
+
+
+
+
 int main()
 {
-	cout << sizeof(long) << endl;
-	cout << sizeof(A) << endl;
+    string s;
+    getline(cin, s);
+    int sum = 0;
+    int a1 = lengthNum(s);
+    int a2 = AZNum(s);
+    int a3 = Numsum(s);
+    int a4 = Fsum(s);
+    int a5 = endSum(s);
+    sum = lengthNum(s) + AZNum(s) + Numsum(s) + Fsum(s) + endSum(s);
+    if (sum >= 90)
+        cout << "VERY_SECURE" << endl;
+    else if (sum >= 80)
+        cout << "SECURE" << endl;
+    else if (sum >= 70)
+        cout << "VERY_STRONG" << endl;
+    else if (sum >= 60)
+        cout << "STRONG" << endl;
+    else if (sum >= 50)
+        cout << "AVERAGE" << endl;
+    else if (sum >= 25)
+        cout << "WEAK" << endl;
+    else
+        cout << "VERY_WEAK" << endl;
+
+
+
+
+    return 0;
 }
