@@ -829,12 +829,90 @@ int Jump(int n,int m)
     return v[m] == INT_MAX ? -1 : v[m];
 }
 
+#include<iostream>
+using namespace std;
+
+int Days(int year, int month)
+{
+    int Monthday[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+    if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+    {
+        return Monthday[month] += 1;
+    }
+    return Monthday[month];
+}
+
+//int main()
+//{
+//    int year, month, day;
+//    cin >> year >> month >> day;
+//    int sum = 0;
+//    for (int i = 1; i < month; ++i)
+//    {
+//        sum += Days(year, month);
+//    }
+//    cout << sum + day << endl;
+//    return 0;
+//}
+//int main()
+//{
+//    /*int n, m;
+//    cin >> n >> m;
+//
+//    int min_stmp = Jump(n,m);
+//    cout << min_stmp << endl;
+//    return 0;*/
+//}
+
+#include<algorithm>
+int getLuckyPacket(int x[], int n, int pos, int sum, int multi)
+{
+    int count = 0;
+    //循环，搜索以位置i开始所有可能的组合
+    for (int i = pos; i < n; i++)
+    {
+        sum += x[i];
+        multi *= x[i];
+        if (sum > multi)
+        {
+            //找到符合要求的组合，加1，继续累加后续的值，看是否有符合要求的集合
+            count += 1 + getLuckyPacket(x, n, i + 1, sum, multi);
+        } 
+            else if (x[i] == 1)
+        {
+            //如何不符合要求，且当前元素值为1，则继续向后搜索
+            count += getLuckyPacket(x, n, i + 1, sum, multi);
+        } 
+            else
+        {
+            //如何sum大于multi,则后面就没有符合要求的组合了
+            break;
+        } 
+            //要搜索下一个位置之前，首先恢复sum和multi
+            sum -= x[i];
+        multi /= x[i];
+        //数字相同的球，没有什么区别，都只能算一个组合，所以直接跳过
+        while (i < n - 1 && x[i] == x[i + 1])
+        {
+            i++;
+        }
+    } 
+    return count;
+       
+} 
 int main()
 {
-    int n, m;
-    cin >> n >> m;
-
-    int min_stmp = Jump(n,m);
-    cout << min_stmp << endl;
-    return 0;
+    int n;
+    while (cin >> n)
+    {
+        int x[5];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> x[i];
+        } 
+        sort(x, x + n);
+        //从第一个位置开始搜索
+        cout << getLuckyPacket(x, n, 0, 0, 1) << endl;
+    } 
+        return 0;
 }
