@@ -890,29 +890,173 @@ int getLuckyPacket(int x[], int n, int pos, int sum, int multi)
         } 
             //要搜索下一个位置之前，首先恢复sum和multi
             sum -= x[i];
-        multi /= x[i];
+            multi /= x[i];
         //数字相同的球，没有什么区别，都只能算一个组合，所以直接跳过
-        while (i < n - 1 && x[i] == x[i + 1])
+        /*while (i < n - 1 && x[i] == x[i + 1])
         {
             i++;
-        }
+        }*/
     } 
     return count;
        
 } 
+//int main()
+//{
+//    int n;
+//    while (cin >> n)
+//    {
+//        int x[3];
+//        for (int i = 0; i < n; i++)
+//        {
+//            cin >> x[i];
+//        } 
+//        sort(x, x + n);
+//        //从第一个位置开始搜索
+//        cout << getLuckyPacket(x, n, 0, 0, 1) << endl;
+//    } 
+//        return 0;
+//}
+
+//4 4 4 4 - joker JOKER
+#include<iostream>
+#include<string>
+using namespace std;
+
+string Maxcrd(string& s1, string& s2)
+{
+    string S = "345678910JQKA2jokerJOKER";
+    if (s1 == "joker JOKER" || s2 == "joker JOKER") return "joker JOKER";
+    int cnts1 = 1, cnts2 = 1;
+    for (auto& e : s1)
+    {
+        if (e == ' ')
+            cnts1++;
+    }
+    for (auto& e : s2)
+    {
+        if (e == ' ')
+            cnts2++;
+    }
+    string str1 = s1.substr(0, s1.find(' '));
+    string str2 = s2.substr(0, s2.find(' '));
+    if (cnts1 == cnts2)
+    {
+        if (S.find(str1) > S.find(str2))
+            return s1;
+        else
+            return s2;
+    }
+    if (cnts1 == 4)
+        return s1;
+    else if (cnts2 == 4)
+        return s2;
+    return "ERROR";
+}
+
+
+//int main()
+//{
+//    string s;
+//    //cin >> s;
+//    getline(cin,s);
+//    size_t pos = s.find('-');
+//    string s1, s2;
+//    s1 = s.substr(0, pos);
+//    s2 = s.substr(pos + 1);
+//    cout << Maxcrd(s1, s2) << endl;
+//}
+
+
+class A
+{
+public:
+    A()
+    {
+        p();
+    }
+    virtual void p() { cout << "A" << endl; }
+    virtual ~A() { p(); }
+};
+class B :public A
+{
+public:
+    B()
+    {
+        p();
+    }
+    void p() { cout << "B" << endl; }
+     ~B() { p(); }
+};
+
+//int main()
+//{
+//    A* a = new B();
+//    delete a;
+//    return 0;
+//}
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int FirstTwo(int n)
+{
+    int size = 2 * n - 1;
+    vector<vector<int>> vv(n, vector<int>(size, 0));
+    vv[0][size / 2] = 1;
+    for (int i = 1; i < n; ++i)
+    {
+        for (int j = 0; j < vv[0].size(); ++j)
+        {
+            if (j == 0)
+                vv[i][j] = vv[i - 1][j] + vv[i - 1][j + 1];
+            else if (j == vv[0].size() - 1)
+                vv[i][j] = vv[i - 1][j - 1] + vv[i - 1][j];
+            else
+                vv[i][j] = vv[i - 1][j - 1] + vv[i - 1][j] + vv[i - 1][j + 1];
+        }
+    }
+    for (int i=1;i<vv[n-1].size();++i)
+    {
+        if (vv[n-1][i]%2==0) {
+            return i;
+        }
+
+    }
+    return -1;
+}
+
+//int main()
+//{
+//    int n;
+//    while (cin >> n)
+//    {
+//        cout << FirstTwo(n) << endl;;
+//    }
+//    return 0;
+//}
+#include<iostream>
+#include<unordered_map>
+#include<ctype.h>
+using namespace std;
+
 int main()
 {
-    int n;
-    while (cin >> n)
+    string s;
+    getline(cin, s);
+    char c;
+    cin >> c;
+    if (islower(c)) c = c - 32;
+    unordered_map<char, int> mp;
+    for (auto e : s)
     {
-        int x[5];
-        for (int i = 0; i < n; i++)
-        {
-            cin >> x[i];
-        } 
-        sort(x, x + n);
-        //从第一个位置开始搜索
-        cout << getLuckyPacket(x, n, 0, 0, 1) << endl;
-    } 
-        return 0;
+        if (islower(c)) c = c - 32;
+
+        mp[e]++;
+    }
+    auto it = mp.find(c);
+    if (it != mp.end())
+    {
+        cout << it->second << endl;
+    }
+
 }
