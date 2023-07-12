@@ -178,6 +178,53 @@ int triangleNumber(vector<int>& nums) {
 	}
 	return cnt;
 }
+vector<vector<int>> threeSum(vector<int>& nums) {
+	vector<vector<int>> vv;
+	//1.排序
+	sort(nums.begin(), nums.end());
+	//2.固定i值
+	int n = nums.size();
+	for (int i = 0; i < n;)
+	{
+		if (nums[i] > 0) break;//如果i大于0了，后面找不到负数
+		//2.双指针查找符合的j k
+		int left = i + 1, right = n - 1, target = -nums[i];
+		while (left < right)
+		{
+			int sum = nums[left] + nums[right];
+			if (sum < target) left++;
+			else if (sum > target) right--;
+			else
+			{
+				vv.push_back({ nums[i],nums[left],nums[right] });
+				left++, right--;
+				//对j k 去重
+				while (left < right && nums[left] == nums[left - 1]) left++;
+				while (left < right && nums[right] == nums[right + 1]) right--;
+			}
+		}
+
+		//3.一轮结束，更新，并且对i去重
+		++i;
+		while (i < n && nums[i] == nums[i - 1]) ++i;
+	}
+	return vv;
+}
+
+vector<int> twoSum(vector<int>& nums, int target) {
+	int left = 0, right = nums.size() - 1;
+	while (left < right)
+	{
+		int sum = nums[left] + nums[right];
+
+		if (sum > target) right--;
+		else if (sum < target) left++;
+		else return { nums[left],nums[right] };
+	}
+	return { -1,-1 };
+}
+
+
 int main()
 {
 	////isHappy(3);
