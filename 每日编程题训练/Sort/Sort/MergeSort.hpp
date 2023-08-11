@@ -42,3 +42,4 @@ void MergeSort(int* a, int n) {
 	delete[] tmp;
 	tmp = NULL;
 }
+

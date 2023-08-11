@@ -1,4 +1,5 @@
 
+#include <stack>
 void insetSort(int *a,int n)
 {
 	bool flag = true;
@@ -108,6 +109,51 @@ void quickSort3(int* a, int begin, int end)//双指针法
 }
 
 
-//归并排序 时间复杂度O(n*logn)
-//空间复杂度 O(n)
+int PartSort4(vector<int>& a, int begin, int end)
+{
+	int cur = begin;
+	int key = a[end];
+	int prev = begin - 1;
+	while (cur < end)
+	{
+		if (a[cur] < key)
+		{
+			prev++;
+			swap(a[prev], a[cur]);
+		}
+		cur++;
+
+	}
+	prev++;
+	swap(a[prev], a[end]);
+	return prev;
+}
+
+void QuickSort(vector<int>& a, int begin, int end)
+{
+	stack<int> s;
+	s.push(begin);
+	s.push(end);
+	while (!s.empty())
+	{
+		int right = s.top();
+		s.pop();
+		int left = s.top();
+		s.pop();
+		int keyindex = PartSort4(a, left, right);
+		if (left < keyindex - 1)
+		{
+			s.push(left);
+			s.push(keyindex - 1);
+		}
+		if (keyindex + 1 < right)
+		{
+			s.push(keyindex + 1);
+			s.push(right);
+		}
+	}
+
+}
+
+
 
