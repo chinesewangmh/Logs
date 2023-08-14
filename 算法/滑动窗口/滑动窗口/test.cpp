@@ -95,9 +95,58 @@ int longestOnes(vector<int>& nums, int k) {
     }
     return ret;
 }
+
+
+int minOperations(vector<int>& nums, int x) {
+    //转换成求最长连续子数组问题
+    int n = nums.size();
+    int sum = 0;//数组总和
+    for (auto e : nums)
+        sum += e;
+    int target = sum - x;//最长子数组之和
+
+    if (target < 0) return -1;//查找子数组之和为负数，不符合
+
+    int left = 0, right = 0, tmp = 0;//临时子数组之和
+    int len = -1;//临时子数组长度
+    while (right < n)
+    {
+        tmp += nums[right];//进窗口
+        while (tmp > target)//判断
+        {
+            tmp -= nums[left++];//出窗口
+        }
+        if (tmp == target)
+            len = max(len, right - left + 1);//更新结果
+        ++right;
+    }
+
+    return len == -1 ? -1 : n - len;
+}
+
+
+int totalFruit(vector<int>& fruits) {
+
+    int ret = 0;
+    for (int i = 0; i < fruits.size(); ++i)
+    {
+        int  mp[100001] = { 0 };
+        int cnt = 0;//计数器
+        for (int j = i; j < fruits.size(); ++j)
+        {
+            if (mp[fruits[j]] == 0) cnt++;
+            // mp[fruits[j]]++;
+            if (cnt > 2) break;
+
+            ret = max(ret, j - i + 1);
+        }
+
+    }
+    return ret;
+}
 int main()
 {
    // lengthOfLongestSubstring("deabcabca");
-    vector<int> v = { 0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1 };
-    cout<<longestOnes(v,3);
+    vector<int> v = { 1,2,1 };
+    cout<< totalFruit(v);
 }
