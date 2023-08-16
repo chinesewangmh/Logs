@@ -105,3 +105,58 @@ bool isValidBST(TreeNode* root) {
     //都符合搜索树返回true
     return left && cur && right;
 }
+
+
+//二叉搜索树中第K小的元素
+
+class Solution {
+    int count;//每次遍历一个节点，减1，直到为0
+    int res;//记录count为0的时候节点值
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        count = k;
+        dfs(root);
+        return res;
+    }
+    void dfs(TreeNode* root)
+    {
+        //剪枝：count==0
+        if (root == nullptr || count == 0) return;
+        dfs(root->left);
+        if (count == 0) return;
+        count--;
+        if (count == 0) res = root->val;
+        dfs(root->right);
+    }
+};
+
+//二叉树的所有路径
+class Solution {
+    vector<string> res;
+
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        string path;
+        dfs(root, path);
+        return res;
+    }
+    //注意，这里不能是string& path，否则就相当于全局变量
+    void dfs(TreeNode* root, string path)
+    {
+        path += to_string(root->val);
+        if (root->left == nullptr && root->right == nullptr)
+        {
+            res.push_back(path);
+            return;
+        }
+        path += "->";
+
+        //剪枝+回溯
+        if (root->left) dfs(root->left, path);//对path的操作不影响右子树
+
+        //从这一步开始体现出“恢复现场”
+        if (root->right) dfs(root->right, path);
+
+
+    }
+};
