@@ -1,3 +1,4 @@
+#pragma warning(disable:4996)
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -136,7 +137,7 @@ int getLastRemaining(int n, int m) {
 
     int idx = 0;
     while (circle.size() > 1) {
-        // 找到报到m的人的索引
+        // 找到报到m的人的索引:是当前位置的m-1
         idx = (idx + m - 1) % circle.size();
 
         // 将报到m的人从圈子中移除
@@ -219,14 +220,62 @@ string convertToTitle(int columnNumber) {
     return row;
 }
 
-int main()
+
+//void func(char* p)
+//{
+//    p = new char[100];
+//}
+//
+//int main()
+//{
+//    char* str = nullptr;
+//    func(str);
+//
+//    strcpy(str,"hello world");
+//    printf("%s",str);
+//    
+//}
+//char* func()
+//{
+//    char* p = new char[100];
+//    return p;
+//}
+//
+//int main()
+//{
+//    char* str = func();
+//    strcpy(str, "hello world");
+//    printf("%s", str);
+//    delete[] str;  // Don't forget to deallocate the memory!  
+//}
+// 
+// 
+// 
+//void myFunction(int*& ptr) {
+//    ptr = new int(10);
+//}
+//
+//int main() {
+//    int* ptr;
+//    myFunction(ptr);
+//    std::cout << *ptr << std::endl;
+//    delete ptr;
+//    return 0;
+//}
+
+
+
+
+
+
+void func(void* p)
 {
-    cout<< convertToTitle(701);
+    char* str1 = static_cast<char*>(p);
+    delete[] str1;
 }
 
-
-
-
-
-
-
+int main()
+{
+    char* str = new char[10];
+   func(str);
+}
