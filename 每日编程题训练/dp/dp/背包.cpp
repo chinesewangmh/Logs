@@ -136,65 +136,65 @@ using namespace std;
 
 
 
-int findTargetSumWays(vector<int>& nums, int target) {
-    //解题思路：假设nums数组中添加符号之后，所有正数绝对值为a，所有负数绝对值为b
-    //则有：a+b=sum,a-b=target;==>a=(sum+target)/2
-    //题目转化成在数组nums挑选出和为a的有几种选法
-    int sum = 0;
-    for (auto e : nums) sum += e;
-    int a = (sum + target) / 2;
-    //题目中都是整数，sum+target为奇数的时候，凑不出来
-    if (a < 0 || (sum + target) % 2 != 0) return 0;
-    int n = nums.size();
-
-    //dp[i][j]:从前i个数中，和为j有多少种选法
-    //细节：第一列不用初始化，当j=0时，可能发生越界，
-    //但是要想用dp[i-1][j-nums[i-1]]，需要满足j>=nums[i-1]
-    //j=0，那么nums[i-1]只能为0才满足0>=0,因此dp[i-1][j-nums[i-1]]=>dp[i-1][0]
-    vector<vector<int>> dp(n + 1, vector<int>(a + 1));
-    dp[0][0] = 1;
-
-    for (int i = 1; i <= n; ++i)
-    {
-        for (int j = 0; j <= a; ++j)
-        {
-            dp[i][j] = dp[i - 1][j];
-            if (j >= nums[i - 1])
-                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
-        }
-    }
-
-    return dp[n][a];
-
-}
-int findTargetSumWays(vector<int>& nums, int target) {
-    //解题思路：假设nums数组中添加符号之后，所有正数绝对值为a，所有负数绝对值为b
-    //则有：a+b=sum,a-b=target;==>a=(sum+target)/2
-    //题目转化成在数组nums挑选出和为a的有几种选法
-    int sum = 0;
-    for (auto e : nums) sum += e;
-    int a = (sum + target) / 2;
-    //题目中都是整数，sum+target为奇数的时候，凑不出来
-    if (a < 0 || (sum + target) % 2 != 0) return 0;
-    int n = nums.size();
-
-    //dp[i][j]:从前i个数中，和为j有多少种选法
-    //细节：第一列不用初始化，当j=0时，可能发生越界，
-    //但是要想用dp[i-1][j-nums[i-1]]，需要满足j>=nums[i-1]
-    //j=0，那么nums[i-1]只能为0才满足0>=0,因此dp[i-1][j-nums[i-1]]=>dp[i-1][0]
-    vector<int> dp(a + 1);
-    dp[0] = 1;
-
-    for (int i = 1; i <= n; ++i)
-    {
-        for (int j = a; j >= nums[i - 1]; --j)
-        {
-            dp[j] = dp[j] + dp[j - nums[i - 1]];
-        }
-    }
-
-    return dp[a];
-}
+//int findTargetSumWays(vector<int>& nums, int target) {
+//    //解题思路：假设nums数组中添加符号之后，所有正数绝对值为a，所有负数绝对值为b
+//    //则有：a+b=sum,a-b=target;==>a=(sum+target)/2
+//    //题目转化成在数组nums挑选出和为a的有几种选法
+//    int sum = 0;
+//    for (auto e : nums) sum += e;
+//    int a = (sum + target) / 2;
+//    //题目中都是整数，sum+target为奇数的时候，凑不出来
+//    if (a < 0 || (sum + target) % 2 != 0) return 0;
+//    int n = nums.size();
+//
+//    //dp[i][j]:从前i个数中，和为j有多少种选法
+//    //细节：第一列不用初始化，当j=0时，可能发生越界，
+//    //但是要想用dp[i-1][j-nums[i-1]]，需要满足j>=nums[i-1]
+//    //j=0，那么nums[i-1]只能为0才满足0>=0,因此dp[i-1][j-nums[i-1]]=>dp[i-1][0]
+//    vector<vector<int>> dp(n + 1, vector<int>(a + 1));
+//    dp[0][0] = 1;
+//
+//    for (int i = 1; i <= n; ++i)
+//    {
+//        for (int j = 0; j <= a; ++j)
+//        {
+//            dp[i][j] = dp[i - 1][j];
+//            if (j >= nums[i - 1])
+//                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
+//        }
+//    }
+//
+//    return dp[n][a];
+//
+//}
+//int findTargetSumWays(vector<int>& nums, int target) {
+//    //解题思路：假设nums数组中添加符号之后，所有正数绝对值为a，所有负数绝对值为b
+//    //则有：a+b=sum,a-b=target;==>a=(sum+target)/2
+//    //题目转化成在数组nums挑选出和为a的有几种选法
+//    int sum = 0;
+//    for (auto e : nums) sum += e;
+//    int a = (sum + target) / 2;
+//    //题目中都是整数，sum+target为奇数的时候，凑不出来
+//    if (a < 0 || (sum + target) % 2 != 0) return 0;
+//    int n = nums.size();
+//
+//    //dp[i][j]:从前i个数中，和为j有多少种选法
+//    //细节：第一列不用初始化，当j=0时，可能发生越界，
+//    //但是要想用dp[i-1][j-nums[i-1]]，需要满足j>=nums[i-1]
+//    //j=0，那么nums[i-1]只能为0才满足0>=0,因此dp[i-1][j-nums[i-1]]=>dp[i-1][0]
+//    vector<int> dp(a + 1);
+//    dp[0] = 1;
+//
+//    for (int i = 1; i <= n; ++i)
+//    {
+//        for (int j = a; j >= nums[i - 1]; --j)
+//        {
+//            dp[j] = dp[j] + dp[j - nums[i - 1]];
+//        }
+//    }
+//
+//    return dp[a];
+//}
 
 
 
@@ -228,8 +228,87 @@ int lastStoneWeightII(vector<int>& stones) {
     return sum - 2 * dp[n][mid];
 }
 
+
+
+//const int MOD = 1e9 + 7;
+//int fun(int m) {
+//    //3 *pow(2, m - 1)项
+//    vector<vector<int>> array(m + 1, vector<int>(3));// array[n][i]表示第n组以i结尾的数组的权值
+//    array[2][0] = 3; // 10,20
+//    array[2][1] = 2; // 01,21
+//    array[2][2] = 3; // 02,12
+//
+//    for (int n = 3; n <= m; n++) 
+//    {
+//        int count = (int)pow(2,n - 2); // n-1组中分别以以0，1，2结尾的各有多少项
+//        // 第n组中以0结尾的分别是由上一组中以1和2结尾的组成
+//        // 将0添加在1后面权值+1， 共有count项，总权制增加count*1
+//        // 将0添加在2后面权值+2， 共有count项，总权制增加count*2， 其他的类推
+//        array[n][0] = (count * 1 + array[n - 1][1]) + (count * 2 + array[n - 1][2]) % MOD;
+//
+//        array[n][1] = (count * 1 + array[n - 1][0]) + (count * 1 + array[n - 1][2]) % MOD;
+//
+//        array[n][2] = (count * 2 + array[n - 1][0]) + (count * 1 + array[n - 1][1]) % MOD;
+//  
+//    }
+//
+//    return (array[m][0] + array[m][1] + array[m][2]) % MOD;
+//
+//}
+
+
+//
+const int MOD = 1e9 + 7;
+int fun(int m) {
+    vector<int> curArray(3), prevArray(3); // curArray[i]表示第n组以i结尾的数组的权值，prevArray[i]表示第n-1组以i结尾的数组的权值
+    curArray[0] = 3; // 10,20
+    curArray[1] = 2; // 01,21
+    curArray[2] = 3; // 02,12
+
+    for (int n = 3; n <= m; n++)
+    {
+        int count = (int)pow(2, n - 2);
+        prevArray[0] = curArray[0];
+        prevArray[1] = curArray[1];
+        prevArray[2] = curArray[2];
+
+        int temp0 = (count * 1 + prevArray[1]) % MOD+ (count * 2 + prevArray[2]) % MOD;
+        int temp1 = (count * 1 + prevArray[0]) % MOD + (count * 1 + prevArray[2]) % MOD;
+        int temp2 = (count * 2 + prevArray[0]) % MOD + (count * 1 + prevArray[1]) % MOD;
+
+
+        curArray[0] = temp0;
+        curArray[1] = temp1;
+        curArray[2] = temp2;
+    }
+
+    return ((curArray[0] + curArray[1])%MOD + curArray[2]) % MOD;
+}
+
+
+
+const int m = 1e9 + 7;
+int fastMi(int n) {
+    int a = n - 1;
+    n = n + 1;
+    int x = 2;
+    int  res = 1;
+    while (n > 0) {
+        if (n % 2 == 1) {
+            res = (res * x) % m;
+        }
+        x = (x * x) % m;
+        n /= 2;
+    }
+    return (a * res)%m;
+}
+
+
+
+
 int main()
 {
     vector<int> v{ 1,5,11,5 };
-    canPartition(v);
+   // canPartition(v);
+    fun(3);
 }
