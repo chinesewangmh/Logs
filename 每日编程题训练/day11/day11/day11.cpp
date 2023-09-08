@@ -117,8 +117,70 @@ int subarraysDivByK(vector<int>& nums, int k) {
     return res;
 }
 
+class A
+{
+public:
+    A() { cout << "a"; }
+    virtual ~A() { cout << "~a"; }
+};
+class B
+{
+public:
+    B() { cout << "b"; }
+    virtual ~B() { cout << "~b"; }
+};
+
+class C :public  B,public A
+{
+public:
+    C(){ cout << "c"; }
+    ~C(){ cout << "~c"; }
+    //A a;
+};
+
+//int main()
+//{
+//    /*int a = (-3 % 5+5)%5;
+//    cout << a;*/
+//   // C c; //bac ~c~a~b
+//    //uint8_t* p1 = reinterpret_cast<uint8_t*>(0x801000);
+//    //uint32_t* p2 = reinterpret_cast<uint32_t*>(0x801000);
+//    //cout << p1 + 5 << "   " <<p2 + 5 << endl;
+//
+//    /*uint8_t* p1 = reinterpret_cast<uint8_t*>(0x801000);
+//    uint32_t* p2 = reinterpret_cast<uint32_t*>(0x802000);
+//    cout << reinterpret_cast<uintptr_t>(p1 + 5) << "   " << reinterpret_cast<uintptr_t>(p2) + 5 << endl;*/
+//    
+//    //uint8_t* p1 = reinterpret_cast<uint8_t*>(0x801000);
+//    //cout << p1 << endl;
+//    uint32_t* p2 = reinterpret_cast<uint32_t*>(0x802000);
+//    cout << p2 << endl;
+//    cout << p2+5 << endl;
+//
+//    //cout << p1 + 5 << "   " << p2 + 5 << endl;
+//    int a = 10;
+//    int* pa = &a;
+//    cout << pa << endl;
+//
+//    int* new_pa = pa + 5;
+//    cout << new_pa << endl;
+//
+//    return 0;
+//}
+
+
+
 int main()
 {
-    int a = (-3 % 5+5)%5;
-    cout << a;
+    char arr[] = "dasda";
+    char arr2[10] = "dasda";
+    cout << sizeof(arr2)<<endl;
+    char arr3[3] = {'0','1','2'};
+    cout << sizeof(arr3) << endl;
+
+    //char arr4[2] = { '0','1','2' };//±àÒëÊ±³ö´í
+    
+    cout<<strcmp(arr,arr2);
+
+    
 }
