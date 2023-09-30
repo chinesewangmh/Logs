@@ -99,120 +99,120 @@
 //}
 
 
-#include <iostream>  
-#include <vector>  
-#include <queue>  
-#include <unordered_map>
-
-using namespace std;
-
-// 迷宫数组  
-vector<vector<int>> nums(100, vector<int>(100));
-// 该点是否被访问过  
-vector<vector<bool>> Serch(100, vector<bool>(100, false));
-
-// 扩展数组右、下、左、上  
-int dx[4] = { 0, 1, 0, -1 };
-int dy[4] = { 1, 0, -1, 0 };
-
-struct point {
-    point(int x, int y, int step, pair<int, int > prev)
-        : _x(x), _y(y), _step(step)
-    {
-        _prev.first = prev.first;
-        _prev.second = prev.second;
-    }
-    point(){}
-
-    int _x;
-    int _y;
-    int _step;
-    pair<int,int> _prev; // 前一个点的坐标  
-};
-
-queue<point> q;
-// 存储每个节点信息
-vector<vector<point>> path(100, vector<point>(100));
-
-int main() {
-    /*
-    5 4
-    1 1 4 3
-
-    1 1 2 1
-    1 1 1 1
-    1 1 2 1
-    1 2 1 1
-    1 1 1 2
-    */
-    int row, col;
-    int beginx, beginy, endx, endy;
-
-    cin >> row >> col;
-    cin >> beginx >> beginy >> endx >> endy;
-    // 填表  
-    for (int i = 1; i <= row; ++i) {
-        for (int j = 1; j <= col; ++j) {
-            cin >> nums[i][j];
-        }
-    }
-
-    // BFS  
-
-    // 起点入队  
-    point start(beginx, beginy, 0, make_pair(0,0)); // 初始化前一个点为空的点  
-    q.push(start);
-    // 设置访问状态  
-    Serch[beginx][beginy] = true;
-    path[beginx][beginy]=start; // 将起点添加到路径中  
-
-    // bool flag = 0; // 不再需要这个标志，因为我们使用路径记录来检查是否到达终点  
-    while (!q.empty()) {
-        // 判断是否到达终点  
-        int x = q.front()._x;
-        int y = q.front()._y;
-        if (x == endx && y == endy) {
-            cout << "Steps: " << q.front()._step << endl;
-            cout << "Path: ";
-            
-            while (x != beginx || y != beginy) { // 回溯路径直到起点  
-                
-                cout << "(" << x << ", " << y << ") "; // 输出当前点的坐标  
-                point curr = path[x][y]; //访问当前节点  
-                x = curr._prev.first; // 回溯到前一个点的坐标  
-                y = curr._prev.second; // 回溯到前一个点的坐标 
-            }
-            break; // 到达终点，退出循环  
-        }
-
-        // 没有到达，开始朝四个方向（右，下，左，上）扩展  
-        for (int i = 0; i <= 3; ++i) {
-            int nextX, nextY;
-            nextX = x + dx[i];
-            nextY = y + dy[i];
-
-            // 如果扩展点未被访问并且是空地，节点入队  
-            if (Serch[nextX][nextY] == false && nums[nextX][nextY] == 1) {
-                // 入队，并设置已访问，同时记录当前点的前一个点坐标（即当前点）到路径中  
-                // 这里的_prev是当前点，因为还没有进行出队
-                point tmp(nextX, nextY, q.front()._step + 1, make_pair(q.front()._x, q.front()._y)); 
-                q.push(tmp);
-                Serch[nextX][nextY] = true; // 设置已访问  
-                path[nextX][nextY]=tmp; // 将扩展点添加到路径中  
-            }
-        }
-
-        // 更新完节点，队头出队  
-        q.pop();
-    }
-
-    // 如果没有找到路径，输出"no"  
-    if (path.empty()) {
-        cout << "no" << endl;
-    }
-
-    return 0;
-}
+//#include <iostream>  
+//#include <vector>  
+//#include <queue>  
+//#include <unordered_map>
+//
+//using namespace std;
+//
+//// 迷宫数组  
+//vector<vector<int>> nums(100, vector<int>(100));
+//// 该点是否被访问过  
+//vector<vector<bool>> Serch(100, vector<bool>(100, false));
+//
+//// 扩展数组右、下、左、上  
+//int dx[4] = { 0, 1, 0, -1 };
+//int dy[4] = { 1, 0, -1, 0 };
+//
+//struct point {
+//    point(int x, int y, int step, pair<int, int > prev)
+//        : _x(x), _y(y), _step(step)
+//    {
+//        _prev.first = prev.first;
+//        _prev.second = prev.second;
+//    }
+//    point(){}
+//
+//    int _x;
+//    int _y;
+//    int _step;
+//    pair<int,int> _prev; // 前一个点的坐标  
+//};
+//
+//queue<point> q;
+//// 存储每个节点信息
+//vector<vector<point>> path(100, vector<point>(100));
+//
+//int main() {
+//    /*
+//    5 4
+//    1 1 4 3
+//
+//    1 1 2 1
+//    1 1 1 1
+//    1 1 2 1
+//    1 2 1 1
+//    1 1 1 2
+//    */
+//    int row, col;
+//    int beginx, beginy, endx, endy;
+//
+//    cin >> row >> col;
+//    cin >> beginx >> beginy >> endx >> endy;
+//    // 填表  
+//    for (int i = 1; i <= row; ++i) {
+//        for (int j = 1; j <= col; ++j) {
+//            cin >> nums[i][j];
+//        }
+//    }
+//
+//    // BFS  
+//
+//    // 起点入队  
+//    point start(beginx, beginy, 0, make_pair(0,0)); // 初始化前一个点为空的点  
+//    q.push(start);
+//    // 设置访问状态  
+//    Serch[beginx][beginy] = true;
+//    path[beginx][beginy]=start; // 将起点添加到路径中  
+//
+//    // bool flag = 0; // 不再需要这个标志，因为我们使用路径记录来检查是否到达终点  
+//    while (!q.empty()) {
+//        // 判断是否到达终点  
+//        int x = q.front()._x;
+//        int y = q.front()._y;
+//        if (x == endx && y == endy) {
+//            cout << "Steps: " << q.front()._step << endl;
+//            cout << "Path: ";
+//            
+//            while (x != beginx || y != beginy) { // 回溯路径直到起点  
+//                
+//                cout << "(" << x << ", " << y << ") "; // 输出当前点的坐标  
+//                point curr = path[x][y]; //访问当前节点  
+//                x = curr._prev.first; // 回溯到前一个点的坐标  
+//                y = curr._prev.second; // 回溯到前一个点的坐标 
+//            }
+//            break; // 到达终点，退出循环  
+//        }
+//
+//        // 没有到达，开始朝四个方向（右，下，左，上）扩展  
+//        for (int i = 0; i <= 3; ++i) {
+//            int nextX, nextY;
+//            nextX = x + dx[i];
+//            nextY = y + dy[i];
+//
+//            // 如果扩展点未被访问并且是空地，节点入队  
+//            if (Serch[nextX][nextY] == false && nums[nextX][nextY] == 1) {
+//                // 入队，并设置已访问，同时记录当前点的前一个点坐标（即当前点）到路径中  
+//                // 这里的_prev是当前点，因为还没有进行出队
+//                point tmp(nextX, nextY, q.front()._step + 1, make_pair(q.front()._x, q.front()._y)); 
+//                q.push(tmp);
+//                Serch[nextX][nextY] = true; // 设置已访问  
+//                path[nextX][nextY]=tmp; // 将扩展点添加到路径中  
+//            }
+//        }
+//
+//        // 更新完节点，队头出队  
+//        q.pop();
+//    }
+//
+//    // 如果没有找到路径，输出"no"  
+//    if (path.empty()) {
+//        cout << "no" << endl;
+//    }
+//
+//    return 0;
+//}
 
 
 
@@ -311,3 +311,80 @@ int main() {
 //}
 
 
+//DFS
+#include<cstdio>
+#include<cstdlib>
+#include<queue>
+#include<iostream>
+using namespace std;
+int dir[4][2] = { {0,1},{1,0},{0,-1},{-1,0} };
+int ans = 99999999;
+int a[100][100];
+int v[100][100];
+
+//列，行，开始位置，结束位置
+int n, m, startx, starty, p, q;
+struct node {
+    int x;
+    int y;
+};
+
+//模拟栈
+struct node s[100];
+int top = 0;
+int cnt = 1;
+
+void dfs(int x, int y, int step)
+{
+    if (x == p && y == q)
+    {
+        cnt++;
+        
+        if (step < ans)
+            ans = step;
+        for (int i = 0; i <= top; i++)
+        {
+            cout << s[i].x << " " << s[i].y << endl;
+        }
+
+        return;
+    }
+    for (int k = 0; k < 4; k++)
+    {
+        int tx = x + dir[k][0];
+        int ty = y + dir[k][1];
+
+        if (tx<1 || tx>n || ty<1 || ty>m)
+            continue;
+        if (a[tx][ty] == 0 && v[tx][ty] == 0)
+        {
+            v[tx][ty] = 1;
+            top++;
+            s[top].x = tx;
+            s[top].y = ty;
+
+            dfs(tx, ty, step + 1);
+            v[tx][ty] = 0;
+            top--;
+        }
+    }
+}
+int main()
+{
+
+    scanf("%d%d%d%d%d%d", &n, &m, &startx, &starty, &p, &q);
+
+
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            scanf("%d", &a[i][j]);
+
+    v[startx][starty] = 1;
+    s[0].x = startx;
+    s[0].y = starty;
+
+    dfs(startx, starty, 0);
+    printf("%d", ans);
+    return 0;
+
+}
